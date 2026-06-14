@@ -1,7 +1,6 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import L from "leaflet";
 
 import { useMapStore } from "@/stores/map.store";
 import { useCrossingStore } from "@/stores/crossing.store";
@@ -49,6 +48,8 @@ type CrossingFeatureProps = {
   line?: string;
 };
 
+type LeafletModule = typeof import("leaflet");
+
 export function MapView({
   className = "",
   interactive = true,
@@ -57,10 +58,11 @@ export function MapView({
   const [railways, setRailways] = useState<RailwayFeatureCollection | null>(null);
 
   const mapContainerRef = useRef<HTMLDivElement>(null);
-  const mapRef = useRef<L.Map | null>(null);
-  const railwayLayerRef = useRef<L.GeoJSON | null>(null);
-  const crossingsLayerRef = useRef<L.GeoJSON | null>(null);
-  const routesLayerRef = useRef<L.LayerGroup | null>(null);
+  const leafletRef = useRef<LeafletModule | null>(null);
+  const mapRef = useRef<import("leaflet").Map | null>(null);
+  const railwayLayerRef = useRef<import("leaflet").GeoJSON | null>(null);
+  const crossingsLayerRef = useRef<import("leaflet").GeoJSON | null>(null);
+  const routesLayerRef = useRef<import("leaflet").LayerGroup | null>(null);
   const hasFittedRef = useRef(false);
   const resizeObserverRef = useRef<ResizeObserver | null>(null);
 
@@ -92,42 +94,51 @@ export function MapView({
   }, []);
 
   useEffect(() => {
-    if (!mapContainerRef.current || mapRef.current) return;
+    let cancelled = false;
 
-    const map = L.map(mapContainerRef.current, {
-      center: [
-        MUMBAI_DEFAULT_VIEWPORT.latitude,
-        MUMBAI_DEFAULT_VIEWPORT.longitude,
-      ],
-      zoom: MUMBAI_DEFAULT_VIEWPORT.zoom,
-      zoomControl: interactive,
-      dragging: interactive,
-      scrollWheelZoom: interactive,
-      doubleClickZoom: interactive,
-      touchZoom: interactive,
-      keyboard: interactive,
-      attributionControl: true,
-    });
+    const init = async () => {
+      if (!mapContainerRef.current || mapRef.current) return;
 
-    L.tileLayer(OSM_TILE_URL, {
-      attribution: OSM_ATTRIBUTION,
-    }).addTo(map);
+      const L = await import("leaflet");
+      if (cancelled) return;
 
-    if (interactive && !map.zoomControl) {
-      L.control.zoom({ position: "bottomright" }).addTo(map);
-    }
+      leafletRef.current = L;
 
-    mapRef.current = map;
-    setMapLoaded(true);
-
-    if (mapContainerRef.current && "ResizeObserver" in window) {
-      resizeObserverRef.current = new ResizeObserver(() => {
-        map.invalidateSize();
+      const map = L.map(mapContainerRef.current, {
+        center: [
+          MUMBAI_DEFAULT_VIEWPORT.latitude,
+          MUMBAI_DEFAULT_VIEWPORT.longitude,
+        ],
+        zoom: MUMBAI_DEFAULT_VIEWPORT.zoom,
+        zoomControl: interactive,
+        dragging: interactive,
+        scrollWheelZoom: interactive,
+        doubleClickZoom: interactive,
+        touchZoom: interactive,
+        keyboard: interactive,
+        attributionControl: true,
       });
-      resizeObserverRef.current.observe(mapContainerRef.current);
-    }
+
+      L.tileLayer(OSM_TILE_URL, {
+        attribution: OSM_ATTRIBUTION,
+      }).addTo(map);
+
+      mapRef.current = map;
+      setMapLoaded(true);
+
+      if (mapContainerRef.current && "ResizeObserver" in window) {
+        resizeObserverRef.current = new ResizeObserver(() => {
+          map.invalidateSize();
+        });
+        resizeObserverRef.current.observe(mapContainerRef.current);
+      }
+    };
+
+    void init();
 
     return () => {
+      cancelled = true;
+
       resizeObserverRef.current?.disconnect();
       resizeObserverRef.current = null;
 
@@ -140,15 +151,17 @@ export function MapView({
       routesLayerRef.current?.remove();
       routesLayerRef.current = null;
 
-      map.remove();
+      mapRef.current?.remove();
       mapRef.current = null;
+      leafletRef.current = null;
       setMapLoaded(false);
     };
   }, [interactive, setMapLoaded]);
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map || !railways) return;
+    const L = leafletRef.current;
+    if (!map || !railways || !L) return;
 
     railwayLayerRef.current?.remove();
 
@@ -171,7 +184,8 @@ export function MapView({
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
+    const L = leafletRef.current;
+    if (!map || !L) return;
 
     crossingsLayerRef.current?.remove();
 
@@ -226,7 +240,7 @@ export function MapView({
         const [lng, lat] = point.coordinates as [number, number];
 
         if ("bindTooltip" in layer) {
-          (layer as L.CircleMarker).bindTooltip(props.name, {
+          (layer as import("leaflet").CircleMarker).bindTooltip(props.name, {
             direction: "top",
             offset: [0, -8],
             opacity: 1,
@@ -250,7 +264,7 @@ export function MapView({
     if (!hasFittedRef.current && crossings.length > 0) {
       const points = crossings
         .filter((c) => Number.isFinite(c.latitude) && Number.isFinite(c.longitude))
-        .map((c) => [c.latitude, c.longitude] as L.LatLngExpression);
+        .map((c) => [c.latitude, c.longitude] as [number, number]);
 
       if (points.length === 1) {
         map.setView(points[0], 12);
@@ -277,7 +291,8 @@ export function MapView({
 
   useEffect(() => {
     const map = mapRef.current;
-    if (!map) return;
+    const L = leafletRef.current;
+    if (!map || !L) return;
 
     routesLayerRef.current?.remove();
     routesLayerRef.current = L.layerGroup().addTo(map);
@@ -291,7 +306,7 @@ export function MapView({
       if (!route.geometry) return;
 
       const positions = route.geometry.coordinates.map(
-        ([lng, lat]) => [lat, lng] as L.LatLngExpression
+        ([lng, lat]) => [lat, lng] as [number, number]
       );
 
       const isSelected = route.id === selectedRouteId;
