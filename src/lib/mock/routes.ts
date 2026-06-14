@@ -1,0 +1,72 @@
+import type { RouteOption } from "@/types/route";
+
+export const MOCK_ROUTES: RouteOption[] = [
+  {
+    id: "route-fastest",
+    type: "fastest",
+    eta: 28,
+    distance: 14.2,
+    expectedDelay: 4.2,
+    crossingRisk: 72,
+    confidence: 87,
+    timeSaved: 0,
+    polyline: "",
+    crossings: ["LC-02", "LC-03", "LC-09"],
+    recommended: false,
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [72.8777, 19.0760],
+        [72.8600, 19.0900],
+        [72.8386, 19.0990],
+        [72.8347, 19.1197],
+      ],
+    },
+  },
+  {
+    id: "route-avoid-crossings",
+    type: "avoid-crossings",
+    eta: 31,
+    distance: 16.8,
+    expectedDelay: 0.4,
+    crossingRisk: 12,
+    confidence: 94,
+    timeSaved: 6.4,
+    polyline: "",
+    crossings: ["LC-12"],
+    recommended: true,
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [72.8777, 19.0760],
+        [72.9000, 19.0600],
+        [72.9200, 19.0900],
+        [72.9235, 19.1052],
+        [72.9400, 19.1400],
+      ],
+    },
+  },
+  {
+    id: "route-balanced",
+    type: "balanced",
+    eta: 29,
+    distance: 15.1,
+    expectedDelay: 1.8,
+    crossingRisk: 38,
+    confidence: 91,
+    timeSaved: 3.1,
+    polyline: "",
+    crossings: ["LC-06"],
+    recommended: false,
+    geometry: {
+      type: "LineString",
+      coordinates: [
+        [72.8777, 19.0760],
+        [72.8700, 19.0500],
+        [72.8395, 19.0435],
+        [72.8361, 19.0596],
+        [72.8347, 19.1197],
+      ],
+    },
+  },
+];

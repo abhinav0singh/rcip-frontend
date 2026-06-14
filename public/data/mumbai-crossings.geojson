@@ -1,0 +1,265 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-01",
+        "name": "Andheri Crossing",
+        "status": "open",
+        "confidence": 91,
+        "riskScore": 22,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8347, 19.1197] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-02",
+        "name": "Vile Parle Crossing",
+        "status": "closing",
+        "confidence": 87,
+        "riskScore": 78,
+        "expectedDelay": 4.2,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8342, 19.0990] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-03",
+        "name": "Santacruz East Gate",
+        "status": "closed",
+        "confidence": 95,
+        "riskScore": 90,
+        "expectedDelay": 6.1,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8386, 19.0815] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-04",
+        "name": "Khar Road Crossing",
+        "status": "open",
+        "confidence": 82,
+        "riskScore": 35,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8384, 19.0706] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-05",
+        "name": "Bandra Level Crossing",
+        "status": "open",
+        "confidence": 88,
+        "riskScore": 41,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8361, 19.0596] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-06",
+        "name": "Mahim Junction Gate",
+        "status": "closing",
+        "confidence": 79,
+        "riskScore": 65,
+        "expectedDelay": 3.8,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8395, 19.0435] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-07",
+        "name": "Dadar West Gate",
+        "status": "open",
+        "confidence": 93,
+        "riskScore": 18,
+        "expectedDelay": 0,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8430, 19.0178] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-08",
+        "name": "Matunga Road Gate",
+        "status": "open",
+        "confidence": 85,
+        "riskScore": 29,
+        "expectedDelay": 0,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8595, 19.0245] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-09",
+        "name": "Sion Crossing",
+        "status": "closed",
+        "confidence": 91,
+        "riskScore": 88,
+        "expectedDelay": 7.5,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8656, 19.0407] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-10",
+        "name": "Kurla West Gate",
+        "status": "open",
+        "confidence": 77,
+        "riskScore": 44,
+        "expectedDelay": 0,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8788, 19.0728] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-11",
+        "name": "Ghatkopar Crossing",
+        "status": "open",
+        "confidence": 89,
+        "riskScore": 31,
+        "expectedDelay": 0,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.9081, 19.0863] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-12",
+        "name": "Vikhroli Gate",
+        "status": "uncertain",
+        "confidence": 54,
+        "riskScore": 57,
+        "expectedDelay": 2.1,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.9235, 19.1052] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-13",
+        "name": "Bhandup West Gate",
+        "status": "open",
+        "confidence": 86,
+        "riskScore": 26,
+        "expectedDelay": 0,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.9311, 19.1459] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-14",
+        "name": "Mulund Crossing",
+        "status": "closing",
+        "confidence": 81,
+        "riskScore": 71,
+        "expectedDelay": 5.3,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.9529, 19.1741] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-15",
+        "name": "Borivali North Gate",
+        "status": "open",
+        "confidence": 92,
+        "riskScore": 14,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8561, 19.2289] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-16",
+        "name": "Kandivali Gate",
+        "status": "open",
+        "confidence": 84,
+        "riskScore": 33,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8490, 19.2046] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-17",
+        "name": "Malad Crossing",
+        "status": "open",
+        "confidence": 90,
+        "riskScore": 19,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8477, 19.1878] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-18",
+        "name": "Goregaon West Gate",
+        "status": "closed",
+        "confidence": 94,
+        "riskScore": 86,
+        "expectedDelay": 5.9,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8484, 19.1566] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-19",
+        "name": "Jogeshwari Crossing",
+        "status": "open",
+        "confidence": 83,
+        "riskScore": 38,
+        "expectedDelay": 0,
+        "line": "Western"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.8484, 19.1342] }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "id": "LC-20",
+        "name": "Ghatkopar East Gate",
+        "status": "uncertain",
+        "confidence": 61,
+        "riskScore": 52,
+        "expectedDelay": 1.8,
+        "line": "Central"
+      },
+      "geometry": { "type": "Point", "coordinates": [72.9129, 19.0771] }
+    }
+  ]
+}

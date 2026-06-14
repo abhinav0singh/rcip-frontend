@@ -1,0 +1,120 @@
+@import "leaflet/dist/leaflet.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap');
+
+:root {
+  --font-inter: 'Inter', system-ui, sans-serif;
+  --font-geist-sans: 'Inter', system-ui, sans-serif;
+  --font-geist-mono: 'Courier New', monospace;
+
+  /* Brand tokens */
+  --color-ink: #0A0A0A;
+  --color-paper: #F5F4F0;
+  --color-signal-green: #22C55E;
+  --color-signal-amber: #F59E0B;
+  --color-signal-red: #EF4444;
+
+  /* Map height */
+  --map-height: 100dvh;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+body {
+  background-color: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-inter);
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
+/* Mapbox overrides */
+.mapboxgl-map {
+  font-family: var(--font-inter) !important;
+}
+
+.mapboxgl-ctrl-attrib {
+  font-size: 10px !important;
+}
+
+.mapboxgl-popup-content {
+  border-radius: 8px;
+  padding: 0;
+  box-shadow: 0 4px 24px rgba(0,0,0,0.15);
+  border: 1px solid rgba(0,0,0,0.08);
+}
+
+.mapboxgl-popup-tip {
+  display: none;
+}
+
+/* Ticker animation */
+@keyframes ticker {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+.ticker-animate {
+  animation: ticker 30s linear infinite;
+  display: flex;
+  width: max-content;
+}
+
+/* Crossing pulse animations */
+@keyframes crossing-pulse-amber {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245, 158, 11, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(245, 158, 11, 0); }
+}
+
+@keyframes crossing-pulse-red {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
+  50% { box-shadow: 0 0 0 8px rgba(239, 68, 68, 0); }
+}
+
+.crossing-pulse-closing {
+  animation: crossing-pulse-amber 1.5s ease-out infinite;
+}
+
+.crossing-pulse-closed {
+  animation: crossing-pulse-red 2s ease-out infinite;
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(0,0,0,0.15);
+  border-radius: 2px;
+}
+
+/* Focus ring */
+:focus-visible {
+  outline: 2px solid var(--color-ink);
+  outline-offset: 2px;
+}
+
+/* Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *, ::before, ::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
