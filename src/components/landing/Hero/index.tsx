@@ -1,99 +1,18 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import mapboxgl from "mapbox-gl";
-import "mapbox-gl/dist/mapbox-gl.css";
-import { MUMBAI_DEFAULT_VIEWPORT } from "@/constants/map";
 import { STATS } from "@/constants/app";
-
-const MAPBOX_TOKEN = process.env.NEXT_PUBLIC_MAPBOX_TOKEN ?? "";
+import { MapView } from "@/components/map/MapView";
+import { useCrossings } from "@/hooks/useCrossings";
 
 export function Hero() {
-  const mapRef = useRef<HTMLDivElement>(null);
-  const mapInstanceRef = useRef<mapboxgl.Map | null>(null);
-
-  useEffect(() => {
-    if (!mapRef.current || mapInstanceRef.current || !MAPBOX_TOKEN) return;
-
-    mapboxgl.accessToken = MAPBOX_TOKEN;
-
-    const map = new mapboxgl.Map({
-      container: mapRef.current,
-      style: process.env.NEXT_PUBLIC_MAPBOX_STYLE ?? "mapbox://styles/mapbox/light-v11",
-      center: [MUMBAI_DEFAULT_VIEWPORT.longitude, MUMBAI_DEFAULT_VIEWPORT.latitude],
-      zoom: MUMBAI_DEFAULT_VIEWPORT.zoom,
-      interactive: false,
-      attributionControl: false,
-    });
-
-    map.on("load", () => {
-      // Add railway data
-      map.addSource("mumbai-railways", {
-        type: "geojson",
-        data: "/data/mumbai-railways.geojson",
-      });
-
-      map.addLayer({
-        id: "railway-lines",
-        type: "line",
-        source: "mumbai-railways",
-        paint: {
-          "line-color": ["get", "color"],
-          "line-width": 2,
-          "line-opacity": 0.5,
-        },
-      });
-
-      // Add crossings
-      map.addSource("crossings", {
-        type: "geojson",
-        data: "/data/mumbai-crossings.geojson",
-      });
-
-      map.addLayer({
-        id: "crossings-layer",
-        type: "circle",
-        source: "crossings",
-        paint: {
-          "circle-radius": 5,
-          "circle-color": [
-            "match",
-            ["get", "status"],
-            "open", "#22C55E",
-            "closing", "#F59E0B",
-            "closed", "#EF4444",
-            "#71717A",
-          ],
-          "circle-stroke-width": 2,
-          "circle-stroke-color": "#ffffff",
-        },
-      });
-    });
-
-    // Slow drift animation
-    let bearing = 0;
-    const drift = () => {
-      bearing += 0.015;
-      map.setBearing(bearing);
-      requestAnimationFrame(drift);
-    };
-    const handle = requestAnimationFrame(drift);
-
-    mapInstanceRef.current = map;
-
-    return () => {
-      cancelAnimationFrame(handle);
-      map.remove();
-      mapInstanceRef.current = null;
-    };
-  }, []);
+  useCrossings();
 
   return (
     <section className="relative h-dvh min-h-[640px] overflow-hidden bg-zinc-50">
       {/* Map background */}
-      <div ref={mapRef} className="absolute inset-0 opacity-70" />
+      <div className="absolute inset-0 opacity-70 pointer-events-none"><MapView interactive={false} className="absolute inset-0" /></div>
 
       {/* Gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-paper/80" />
