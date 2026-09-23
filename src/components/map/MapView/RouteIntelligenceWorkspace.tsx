@@ -15,9 +15,11 @@ import { MobileBottomSheet } from "./MobileBottomSheet";
 import { MapView } from ".";
 
 import { useCrossings } from "@/hooks/useCrossings";
+import { useIsDesktop } from "@/hooks/useIsDesktop";
 
 export function RouteIntelligenceWorkspace() {
   useCrossings();
+  const isDesktop = useIsDesktop();
 
   const [isSidebarCollapsed, setSidebarCollapsed] = useState(false);
 
@@ -79,13 +81,13 @@ export function RouteIntelligenceWorkspace() {
         </AnimatePresence>
 
         <div className="relative flex-1">
-          <MapView className="absolute inset-0" />
+          {isDesktop === true && <MapView className="absolute inset-0" />}
           <FutureStateIndicator />
         </div>
       </div>
 
       <div className="md:hidden flex-1 relative overflow-hidden">
-        <MapView className="absolute inset-0" />
+        {isDesktop === false && <MapView className="absolute inset-0" />}
         <FutureStateIndicator />
 
         <div className="absolute top-0 left-0 right-0 z-20 flex items-center justify-between px-4 pt-4">

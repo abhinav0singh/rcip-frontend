@@ -236,8 +236,6 @@ export function MapView({
       },
       onEachFeature: (feature, layer) => {
         const props = feature.properties as CrossingFeatureProps;
-        const point = feature.geometry as GeoJSON.Point;
-        const [lng, lat] = point.coordinates as [number, number];
 
         if ("bindTooltip" in layer) {
           (layer as import("leaflet").CircleMarker).bindTooltip(props.name, {
@@ -251,12 +249,6 @@ export function MapView({
         layer.on("click", () => {
           useCrossingStore.getState().selectCrossing(props.id);
           onCrossingClick?.(props.id);
-
-          if (interactive) {
-            map.flyTo([lat, lng], Math.max(map.getZoom(), 15), {
-              duration: 0.7,
-            });
-          }
         });
       },
     }).addTo(map);
@@ -342,5 +334,3 @@ export function MapView({
     />
   );
 }
-
-//OKAY THIS WAS A FRUSTATING FILE TO BUILD
