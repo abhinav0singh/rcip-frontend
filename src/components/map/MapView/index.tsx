@@ -311,6 +311,14 @@ export function MapView({
         lineJoin: "round",
       }).addTo(routesLayerRef.current!);
     });
+
+    const selected = routes.find((r) => r.id === selectedRouteId);
+    if (selected?.geometry) {
+      const bounds = L.latLngBounds(
+        selected.geometry.coordinates.map(([lng, lat]) => [lat, lng] as [number, number])
+      );
+      map.fitBounds(bounds, { padding: [60, 60], maxZoom: 14 });
+    }
   }, [routes, selectedRouteId]);
 
   useEffect(() => {
